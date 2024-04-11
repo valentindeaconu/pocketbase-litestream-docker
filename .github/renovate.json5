@@ -1,0 +1,32 @@
+{
+  extends: [
+    "config:base",
+    "schedule:daily",
+  ],
+  commitMessageSuffix: " in {{packageFile}}",
+  dependencyDashboardAutoclose: true,
+  automerge: true,
+  baseBranches: ["main"],
+  platformAutomerge: true,
+  labels: ["dependencies"],
+  prHourlyLimit: 1,
+  lockFileMaintenance: {
+    enabled: true,
+  },
+  vulnerabilityAlerts: {
+    enabled: true,
+    labels: [
+      "security",
+    ],
+  },
+  regexManagers: [
+    {
+      fileMatch: ["(^|/)Dockerfile$", "(^|/)Dockerfile\\.[^/]*$"],
+      matchStrings: [
+        "renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sENV .*?_VERSION=(?<currentValue>.*)\\s",
+      ],
+      versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+      extractVersionTemplate: '^v(?<version>\\d+\\.\\d+\\.\\d+)',
+    },
+  ]
+}
