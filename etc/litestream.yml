@@ -1,0 +1,17 @@
+addr: ":${LITESTREAM_PORT}"
+dbs:
+  - path: ${PB_DATA_PATH}/data.db
+    replicas:
+      - url: ${DATA_REPLICA_URI}
+        retention: ${DATA_REPLICA_RETENTION}
+        retention-check-interval: ${DATA_REPLICA_RETENTION_CHECK_INTERVAL}
+        snapshot-interval: ${DATA_REPLICA_SNAPSHOT_INTERVAL}
+        validation-interval: ${DATA_REPLICA_VALIDATION_INTERVAL}
+        sync-interval: ${DATA_REPLICA_SYNC_INTERVAL}
+  - path: ${PB_DATA_PATH}/logs.db
+    replicas:
+      - url: ${LOGS_REPLICA_URI}
+        retention: ${LOGS_REPLICA_RETENTION}
+        retention-check-interval: ${LOGS_REPLICA_RETENTION_CHECK_INTERVAL}
+        snapshot-interval: ${LOGS_REPLICA_SNAPSHOT_INTERVAL}
+        sync-interval: ${LOGS_REPLICA_SYNC_INTERVAL}
