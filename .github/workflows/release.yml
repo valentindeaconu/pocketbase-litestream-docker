@@ -62,28 +62,26 @@ jobs:
             ghcr.io/${{ github.repository }}:${{ env.RELEASE_TAG }}-${{ env.COMMIT_HASH }}
             ghcr.io/${{ github.repository }}:${{ env.RELEASE_TAG }}-${{ env.COMMIT_HASH }}-${{ env.BUILD_TIMESTAMP }}
 
-      - name: "Generate release changelog"
-        uses: heinrichreimer/action-github-changelog-generator@v2.4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          output: "CHANGELOG.md"
-
-      - name: Patch CHANGELOG.md
+      - name: Generate NOTES.md
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GIT_REF: ${{ github.ref_name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "## Versions" >> tmp-CHANGELOG.md
-          echo "Pocketbase: [v$POCKETBASE_VERSION](https://github.com/pocketbase/pocketbase/releases/tag/v$POCKETBASE_VERSION)" >> tmp-CHANGELOG.md
-          echo "Litestream: [v$LITESTREAM_VERSION](https://github.com/benbjohnson/litestream/releases/tag/v$LITESTREAM_VERSION)" >> tmp-CHANGELOG.md
-          echo "" >> tmp-CHANGELOG.md
+          echo "## Versions" >> NOTES.md
+          echo "Pocketbase: [v$POCKETBASE_VERSION](https://github.com/pocketbase/pocketbase/releases/tag/v$POCKETBASE_VERSION)" >> NOTES.md
+          echo "Litestream: [v$LITESTREAM_VERSION](https://github.com/benbjohnson/litestream/releases/tag/v$LITESTREAM_VERSION)" >> NOTES.md
+          echo "" >> NOTES.md
 
-          cat CHANGELOG.md > tmp-CHANGELOG.md
-          mv tmp-CHANGELOG.md CHANGELOG.md
-          cat CHANGELOG.md >> $GITHUB_STEP_SUMMARY
+          gh api repos/$GITHUB_REPOSITORY/releases/generate-notes -f tag_name=$RELEASE_VERSION -f target_commitish=$GIT_REF -q .body >> NOTES.md
+
+          cat NOTES.md >> $GITHUB_STEP_SUMMARY
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          body_path: "CHANGELOG.md"
+          body_path: "NOTES.md"
           name: ${{ env.RELEASE_TAG }}
           tag_name: ${{ env.RELEASE_TAG }}
           make_latest: 'true'
