@@ -73,7 +73,7 @@ jobs:
           echo "Litestream: [v$LITESTREAM_VERSION](https://github.com/benbjohnson/litestream/releases/tag/v$LITESTREAM_VERSION)" >> NOTES.md
           echo "" >> NOTES.md
 
-          gh api repos/$GITHUB_REPOSITORY/releases/generate-notes -f tag_name=$RELEASE_VERSION -f target_commitish=$GIT_REF -q .body >> NOTES.md
+          gh api repos/$GITHUB_REPOSITORY/releases/generate-notes -f tag_name=$RELEASE_TAG -f target_commitish=$GIT_REF -q .body >> NOTES.md
 
           cat NOTES.md >> $GITHUB_STEP_SUMMARY
 
