@@ -1,14 +1,18 @@
 {
   extends: [
-    "config:base",
-    "schedule:daily",
+    'config:recommended',
+    'schedule:daily',
   ],
-  commitMessageSuffix: " in {{packageFile}}",
+  commitMessageSuffix: ' in {{packageFile}}',
   dependencyDashboardAutoclose: true,
   automerge: true,
-  baseBranches: ["main"],
+  baseBranchPatterns: [
+    'main',
+  ],
   platformAutomerge: true,
-  labels: ["dependencies"],
+  labels: [
+    'dependencies',
+  ],
   prHourlyLimit: 1,
   lockFileMaintenance: {
     enabled: true,
@@ -16,17 +20,21 @@
   vulnerabilityAlerts: {
     enabled: true,
     labels: [
-      "security",
+      'security',
     ],
   },
-  regexManagers: [
+  customManagers: [
     {
-      fileMatch: ["(^|/)Dockerfile$", "(^|/)Dockerfile\\.[^/]*$"],
-      matchStrings: [
-        "renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sARG .*?_VERSION=(?<currentValue>.*)\\s",
+      customType: 'regex',
+      managerFilePatterns: [
+        '/(^|/)Dockerfile$/',
+        '/(^|/)Dockerfile\\.[^/]*$/',
       ],
-      versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+      matchStrings: [
+        'renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sARG .*?_VERSION=(?<currentValue>.*)\\s',
+      ],
+      versioningTemplate: '{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}',
       extractVersionTemplate: '^v(?<version>\\d+\\.\\d+\\.\\d+)',
     },
-  ]
+  ],
 }
