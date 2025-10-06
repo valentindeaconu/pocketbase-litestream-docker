@@ -17,7 +17,7 @@ ARG TARGETARCH
 # Download and install Litestream
 # renovate: datasource=github-releases depName=benbjohnson/litestream
 ARG LITESTREAM_VERSION=0.5.0
-RUN wget -qO /tmp/litestream.tar.gz "https://github.com/benbjohnson/litestream/releases/download/v${LITESTREAM_VERSION}/litestream-v${LITESTREAM_VERSION}-${TARGETOS}-$(uname -m).tar.gz" \
+RUN wget -qO /tmp/litestream.tar.gz "https://github.com/benbjohnson/litestream/releases/download/v${LITESTREAM_VERSION}/litestream-${LITESTREAM_VERSION}-${TARGETOS}-$(uname -m).tar.gz" \
     && tar -C /usr/local/bin -xzf /tmp/litestream.tar.gz \
     && chmod +x /usr/local/bin/litestream \
     && rm -f /tmp/litestream.tar.gz
