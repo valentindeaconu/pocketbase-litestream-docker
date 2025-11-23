@@ -24,7 +24,7 @@ RUN wget -qO /tmp/litestream.tar.gz "https://github.com/benbjohnson/litestream/r
 
 # Download and install PocketBase
 # renovate: datasource=github-releases depName=pocketbase/pocketbase
-ARG POCKETBASE_VERSION=0.33.0
+ARG POCKETBASE_VERSION=0.34.0
 ADD https://github.com/pocketbase/pocketbase/releases/download/v${POCKETBASE_VERSION}/pocketbase_${POCKETBASE_VERSION}_${TARGETOS}_${TARGETARCH}.zip /tmp/pocketbase.zip
 RUN unzip /tmp/pocketbase.zip -d /usr/local/bin/ \
     && chmod +x /usr/local/bin/pocketbase \
