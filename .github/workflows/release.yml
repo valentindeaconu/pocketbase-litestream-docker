@@ -24,7 +24,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Compute PocketBase version
         run: echo "POCKETBASE_VERSION=$(cat ./Dockerfile | sed -nr 's/ARG POCKETBASE_VERSION=(.*)/\1/p')" >> $GITHUB_ENV
