@@ -78,7 +78,7 @@ jobs:
           cat NOTES.md >> $GITHUB_STEP_SUMMARY
 
       - name: Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           body_path: "NOTES.md"
